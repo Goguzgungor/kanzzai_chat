@@ -1,0 +1,26 @@
+# Use an official Python runtime as a parent image
+FROM python:3.11-slim
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy the current directory contents into the container at /app
+COPY . .
+
+# Install any needed packages specified in requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Install Ollama if it's a Python package or download and install the binary
+# Replace this with the actual installation command for Ollama if it's different
+# Assuming Ollama can be installed via pip (replace this line with the correct installation command)
+# RUN pip install ollama
+
+# Pull the Llama 3.1 model using the Ollama command
+RUN ollama pull llama3.1
+
+# Expose port 8001 for the Uvicorn server and 7869 for Ollama service
+EXPOSE 8001
+EXPOSE 7869
+
+# Command to start the Ollama service
+CMD ["ollama", "serve", "--port", "7869"]
